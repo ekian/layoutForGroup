@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/8/10.
  */
-object Layout extends App {
+class Layout {
   def layout(parentWidth: Double, padding: Double, vSpacing: Double, hSpacing: Double, children: Seq[Size]): Seq[Point]={
     children.foreach(child =>
       require(child.width < parentWidth-2*padding)
@@ -24,6 +24,7 @@ object Layout extends App {
       pointX += child.width + hSpacing
       Seq((child,point))
     }
+    //最终布局，根据最高的矩形居中
     initLayout.groupBy(_._2.y).flatMap{i=>
       val layouts = i._2
       if(layouts.size==1)
@@ -35,12 +36,12 @@ object Layout extends App {
           Seq(Point(l._2.x,l._2.y+y))
         }
       }
-    }.foreach(println)
+    }.toSeq
 
-//    initLayout.map(_._2).foreach(println)
-    initLayout.map(_._2)
+//    initLayout.map(_._2).foreach(println)initLayout.map(_._2)
+
   }
-  layout(parentWidth = 10.0, padding = 1.0, vSpacing = 1.0, hSpacing = 0, Seq(Size(5, 7), Size(5, 5)))
+//  layout(parentWidth = 10.0, padding = 1.0, vSpacing = 1.0, hSpacing = 0, Seq(Size(5, 7), Size(5, 5)))
 }
 
   case class Size(width: Double, height: Double)
